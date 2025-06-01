@@ -1,3 +1,4 @@
+
 import React, { useState } from "react";
 import CardGame from "./components/cardGame";
 import Header from "./components/header";
@@ -6,30 +7,32 @@ import { useTimer } from "./util/customHooks";
 
 export default function App() {
   const [showModal, setShowModal] = useState(false);
-
-
   const [previousTime, setPreviousTime] = useState(null);
   const [bestTime, setBestTime] = useState(null);
+  const [gameActive, setGameActive] = useState(false);
+  
+  const {
+    time,
+    start: timerStart,
+    stop: timerStop,
+    reset: timerReset,
+  } = useTimer();
 
-
-  const { time, start: timerStart, stop: timerStop, reset: timerReset } = useTimer();
-
- 
   const onGameStart = () => {
-    timerReset();      
-    timerStart();      
+    timerReset();         
+    timerStart();         
+    setGameActive(true);  
   };
 
-  
   const onGameEnd = () => {
-    timerStop();                       
-    setPreviousTime(time);             
+    timerStop();                    
+    setGameActive(false);           
+    setPreviousTime(time);          
     setBestTime((oldBest) => {
       if (oldBest === null || time < oldBest) {
         return time;
-      } else {
-        return oldBest;
       }
+      return oldBest;
     });
   };
 
@@ -42,11 +45,10 @@ export default function App() {
     "Duck 🦆",
   ];
 
-  
   return (
     <>
       <Header
-        time={time}
+        time={gameActive ? time : null}
         previousTime={previousTime}
         bestTime={bestTime}
         openModal={() => setShowModal(true)}
