@@ -14,7 +14,7 @@ Copy the starter files inside of `unsolved` into the root directory of your GitH
 
 Run `npm i` in the root directory of your repository (your `package.json` should be in the root directory).
 
-To start developing, run `npm run dev`.
+To start develop, run `npm run dev`.
 
 &nbsp;
 ## Instructions
